@@ -12,7 +12,10 @@ import {
   Shield,
   IndianRupee,
   Phone,
-  Video
+  Video,
+  Leaf,
+  Flower2,
+  Sprout
 } from 'lucide-react';
 import GlassCard from '../common/GlassCard';
 import { Patient } from '../../types';
@@ -115,6 +118,31 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ patient }) => {
     },
   ];
 
+  // Sample Ayurvedic Remedies blog data
+  const ayurvedicBlogs = [
+    {
+      id: '1',
+      title: 'Tulsi for Immunity',
+      description: 'Tulsi (Holy Basil) boosts immunity and helps fight infections naturally. Add fresh leaves to your tea or water daily.',
+      icon: Leaf,
+      link: '#',
+    },
+    {
+      id: '2',
+      title: 'Turmeric for Inflammation',
+      description: 'Turmeric contains curcumin, a powerful anti-inflammatory compound. Use it in warm milk or curries for best results.',
+      icon: Flower2,
+      link: '#',
+    },
+    {
+      id: '3',
+      title: 'Ashwagandha for Stress',
+      description: 'Ashwagandha is known to reduce stress and improve energy. Try it as a supplement or in herbal teas.',
+      icon: Sprout,
+      link: '#',
+    },
+  ];
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-IN', {
@@ -169,7 +197,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ patient }) => {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Upcoming Appointments */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -245,7 +273,7 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ patient }) => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
-          className="space-y-6"
+          className="space-y-6 lg:col-span-1"
         >
           {/* Quick Actions */}
           <GlassCard className="p-6">
@@ -302,6 +330,47 @@ const PatientDashboard: React.FC<PatientDashboardProps> = ({ patient }) => {
               <p className="text-xs text-gray-300">
                 Drink at least 8-10 glasses of water daily to maintain good health and boost your immune system.
               </p>
+            </div>
+          </GlassCard>
+        </motion.div>
+
+        {/* Ayurvedic Remedies Blog */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="space-y-6 lg:col-span-1"
+        >
+          <GlassCard className="p-6 h-full flex flex-col">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+              <Leaf className="w-5 h-5 text-green-400" />
+              Ayurvedic Remedies
+            </h2>
+            <div className="flex-1 overflow-y-auto max-h-[420px] pr-1 space-y-4 scrollbar-thin scrollbar-thumb-dark-border/40 scrollbar-track-transparent">
+              {ayurvedicBlogs.map((blog) => {
+                const Icon = blog.icon;
+                return (
+                  <div
+                    key={blog.id}
+                    className="flex items-start gap-4 bg-dark-card/60 rounded-xl p-4 border border-dark-border/40 shadow-md shadow-black/10 hover:shadow-green-400/10 transition-all duration-300 group"
+                  >
+                    <div className="flex-shrink-0">
+                      <Icon className="w-8 h-8 text-green-400 drop-shadow-glow" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-semibold text-base mb-1 group-hover:text-green-300 transition-colors">{blog.title}</h3>
+                      <p className="text-gray-300 text-xs mb-2 line-clamp-2">{blog.description}</p>
+                      <a
+                        href={blog.link}
+                        className="inline-block text-xs font-medium text-green-400 hover:text-green-300 underline underline-offset-2 transition-colors rounded px-2 py-1 bg-green-400/5 group-hover:bg-green-400/10"
+                        tabIndex={0}
+                      >
+                        Read More
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </GlassCard>
         </motion.div>

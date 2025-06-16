@@ -1,15 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Heart, Stethoscope, UserCheck, ArrowRight, Shield, Zap, Globe } from 'lucide-react';
+import { Heart, Stethoscope, UserCheck, ArrowRight, Shield, Zap, Globe, Play } from 'lucide-react';
 import GlowingButton from '../common/GlowingButton';
 import LanguageToggle from '../common/LanguageToggle';
 
 interface LandingPageProps {
   onRoleSelect: (role: 'doctor' | 'patient') => void;
+  onDemoMode?: () => void;
 }
 
-const LandingPage: React.FC<LandingPageProps> = ({ onRoleSelect }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onRoleSelect, onDemoMode }) => {
   const { t } = useTranslation();
 
   const features = [
@@ -43,7 +44,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onRoleSelect }) => {
             <Heart className="w-8 h-8 text-neon-blue" />
             <span className="text-2xl font-bold text-white">SwasthyaAI</span>
           </motion.div>
-          <LanguageToggle />
+          <div className="flex items-center gap-4">
+            <LanguageToggle />
+          </div>
         </div>
       </header>
 
@@ -146,31 +149,26 @@ const LandingPage: React.FC<LandingPageProps> = ({ onRoleSelect }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mb-16"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-white text-center mb-12">
-              Why Choose SwasthyaAI?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {features.map((feature, index) => {
-                const Icon = feature.icon;
-                return (
-                  <motion.div
-                    key={feature.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                    className="text-center"
-                  >
-                    <div className="w-16 h-16 bg-neon-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon className="w-8 h-8 text-neon-blue" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">{feature.title}</h3>
-                    <p className="text-gray-400">{feature.description}</p>
-                  </motion.div>
-                );
-              })}
-            </div>
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 * index }}
+                  className="backdrop-blur-lg bg-dark-card/50 border border-dark-border/50 rounded-xl p-6 text-center hover:border-neon-blue/30 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-br from-neon-blue to-neon-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-6 h-6 text-dark-bg" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       </main>

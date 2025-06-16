@@ -144,27 +144,20 @@ const ReportUpload: React.FC<ReportUploadProps> = ({ onUploadComplete }) => {
     link.click();
   };
 
-  const recentReports = [
+  // Mock data for patients and their reports
+  const patientReports = [
     {
-      id: '1',
-      name: 'Blood Test Results - Jan 2024',
-      date: '2024-01-10',
-      type: 'Lab Report',
-      doctor: 'Dr. Smith',
+      patientName: 'Rahul Sharma',
+      reports: [
+        { id: 'r1', name: 'Blood Test Results - Jan 2024' },
+        { id: 'r2', name: 'ECG Report' },
+      ],
     },
     {
-      id: '2',
-      name: 'Chest X-Ray',
-      date: '2024-01-08',
-      type: 'Radiology',
-      doctor: 'Dr. Johnson',
-    },
-    {
-      id: '3',
-      name: 'ECG Report',
-      date: '2024-01-05',
-      type: 'Cardiology',
-      doctor: 'Dr. Wilson',
+      patientName: 'Anita Singh',
+      reports: [
+        { id: 'r3', name: 'Chest X-Ray' },
+      ],
     },
   ];
 
@@ -177,7 +170,7 @@ const ReportUpload: React.FC<ReportUploadProps> = ({ onUploadComplete }) => {
       >
         <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
           <Upload className="w-8 h-8 text-neon-blue" />
-          {t('uploadreport')}
+          Patient Medical Reports
         </h1>
         <p className="text-gray-400">
           Upload your medical reports, lab results, and imaging studies
@@ -193,135 +186,19 @@ const ReportUpload: React.FC<ReportUploadProps> = ({ onUploadComplete }) => {
           className="lg:col-span-2"
         >
           <GlassCard className="p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Upload New Reports</h3>
-            
-            {/* Drag and Drop Area */}
-            <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-300 ${
-                dragActive
-                  ? 'border-neon-blue bg-neon-blue/10'
-                  : 'border-dark-border hover:border-neon-blue/50'
-              }`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <Upload className={`w-12 h-12 mx-auto mb-4 ${
-                dragActive ? 'text-neon-blue' : 'text-gray-400'
-              }`} />
-              <p className="text-lg font-medium text-white mb-2">
-                Drag and drop your files here
-              </p>
-              <p className="text-gray-400 mb-4">
-                or click to select files
-              </p>
-              <input
-                type="file"
-                multiple
-                accept=".pdf,.jpg,.jpeg,.png,.gif,.dcm"
-                onChange={handleFileInput}
-                className="hidden"
-                id="file-upload"
-              />
-              <label htmlFor="file-upload">
-                <GlowingButton
-                  as="span"
-                  variant="outline"
-                  size="md"
-                  className="cursor-pointer"
-                >
-                  Select Files
-                </GlowingButton>
-              </label>
-              <p className="text-xs text-gray-500 mt-4">
-                Supported formats: PDF, JPG, PNG, GIF, DICOM (max 10MB each)
-              </p>
-            </div>
-
-            {/* Upload Progress */}
-            <AnimatePresence>
-              {Object.entries(uploadProgress).map(([fileId, progress]) => (
-                <motion.div
-                  key={fileId}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="mt-4 p-4 bg-dark-card/50 rounded-lg border border-dark-border/50"
-                >
-                  <div className="flex items-center gap-3">
-                    <LoadingSpinner size="sm" />
-                    <div className="flex-1">
-                      <p className="text-sm text-white">Uploading...</p>
-                      <div className="w-full bg-dark-border rounded-full h-2 mt-1">
-                        <div
-                          className="bg-gradient-to-r from-neon-blue to-neon-cyan h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-                    <span className="text-sm text-gray-400">{progress}%</span>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-
-            {/* Uploaded Files */}
-            {uploadedFiles.length > 0 && (
-              <div className="mt-6">
-                <h4 className="text-lg font-semibold text-white mb-4">Uploaded Files</h4>
-                <div className="space-y-3">
-                  {uploadedFiles.map((file) => {
-                    const FileIcon = getFileIcon(file.type);
-                    return (
-                      <motion.div
-                        key={file.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="p-4 bg-dark-card/50 rounded-lg border border-dark-border/50 hover:border-neon-blue/30 transition-colors"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 bg-neon-blue/10 rounded-lg">
-                              <FileIcon className="w-5 h-5 text-neon-blue" />
-                            </div>
-                            <div>
-                              <p className="font-medium text-white">{file.name}</p>
-                              <p className="text-sm text-gray-400">
-                                {formatFileSize(file.size)} • {file.uploadDate.toLocaleDateString()}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => viewFile(file)}
-                              className="p-2 text-gray-400 hover:text-neon-blue transition-colors"
-                              title="View file"
-                            >
-                              <Eye size={16} />
-                            </button>
-                            <button
-                              onClick={() => downloadFile(file)}
-                              className="p-2 text-gray-400 hover:text-neon-blue transition-colors"
-                              title="Download file"
-                            >
-                              <Download size={16} />
-                            </button>
-                            <button
-                              onClick={() => removeFile(file.id)}
-                              className="p-2 text-gray-400 hover:text-red-400 transition-colors"
-                              title="Remove file"
-                            >
-                              <X size={16} />
-                            </button>
-                          </div>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+            <h3 className="text-xl font-semibold text-white mb-4">Patient Reports</h3>
+            <div className="space-y-6">
+              {patientReports.map((patient) => (
+                <div key={patient.patientName} className="bg-dark-card/70 rounded-lg border border-dark-border p-4">
+                  <div className="text-lg font-bold text-neon-blue mb-2">{patient.patientName}</div>
+                  <ul className="list-disc list-inside text-white text-sm space-y-1">
+                    {patient.reports.map((report) => (
+                      <li key={report.id}>{report.name}</li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
           </GlassCard>
         </motion.div>
 

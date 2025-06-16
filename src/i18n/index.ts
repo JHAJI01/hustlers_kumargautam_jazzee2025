@@ -365,9 +365,9 @@ const resources = {
       // Symptoms
       'symptoms': 'લક્ષણો',
       'describe': 'તમારા લક્ષણોનું વર્ણન કરો',
-      'voiceinput': 'વૉઇસ ઇનપુટ',
-      'startvoice': 'વૉઇસ ઇનપુટ શરૂ કરો',
-      'stopvoice': 'વૉઇસ ઇનપુટ બંધ કરો',
+      'voiceinput': 'વૉઇસ ઇન్‌పుట',
+      'startvoice': 'વૉઇસ ઇન్‌పుట శરૂ કરો',
+      'stopvoice': 'વૉઇસ ઇન్‌పుట બંધ કરો',
       'analyzing': 'લક્ષણોનું વિશ્લેષણ કરી રહ્યું છે...',
       
       // Appointments

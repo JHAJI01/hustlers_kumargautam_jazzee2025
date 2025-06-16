@@ -26,15 +26,16 @@ const Sidebar: React.FC<SidebarProps> = ({ user, activeTab, onTabChange }) => {
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { id: 'symptoms', label: t('symptoms'), icon: MessageSquare },
     { id: 'appointments', label: t('appointments'), icon: Calendar },
-    { id: 'reports', label: t('reports'), icon: FileText },
+    { id: 'reports', label: 'Patient Medical Reports', icon: FileText },
     { id: 'settings', label: t('settings'), icon: Settings },
+    { id: 'ayurveda', label: 'Ayurvedic Remedies', icon: Stethoscope },
   ];
 
   const doctorTabs = [
     { id: 'dashboard', label: t('dashboard'), icon: LayoutDashboard },
     { id: 'patients', label: t('patients'), icon: Users },
-    { id: 'appointments', label: t('appointments'), icon: Calendar },
-    { id: 'reports', label: t('reports'), icon: FileText },
+    { id: 'appointments', label: 'Schedule', icon: Calendar },
+    { id: 'reports', label: 'Patient Medical Reports', icon: FileText },
     { id: 'settings', label: t('settings'), icon: Settings },
   ];
 
