@@ -4,6 +4,6 @@ Here is the pdf -- [📄 View Our 2-Page Framework Document](Hustlers_KumarGauta
 
 
 
-Here is the PitchVedio -- ()
+Here is the PitchVedio -- (Hustlers_kumargautam_jazzee2025_Pitch)
 
 
