@@ -23,3 +23,16 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Ignore folders outside project
+../.DS_Store
+../../.DS_Store
+../../Internship/
+../../AutoVoice-Ai/
+../../IIT(BBSR)/
+../../Newwit/
+../../Omnivus/
+../../UEC/
+../../coding_junior/
+../../node/
+../../trial/
